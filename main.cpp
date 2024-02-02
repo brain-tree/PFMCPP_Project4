@@ -1,11 +1,11 @@
 /*
  Project 4 - Part 1 / 9
  video: Chapter 2 Part 7
- Returning Values tasks 
+ Returning Values tasks
 
  Create a branch named Part1
 
- Purpose:  This project will take you through the process of writing a class that wraps a numeric type, beginning with writing simple member functions and ending with a fully templated class with lots of functionality. 
+ Purpose:  This project will take you through the process of writing a class that wraps a numeric type, beginning with writing simple member functions and ending with a fully templated class with lots of functionality.
  
  1) write 3 UDTs named FloatType, DoubleType, IntType.
  
@@ -21,15 +21,15 @@
               '3' is the rhs
               '+' is the operation
 
- 3) implement the appropriate action in the member function. 
-         a) Be aware that floating point division by 0 is legal, but integer division by 0 will crash your program.  
+ 3) implement the appropriate action in the member function.
+         a) Be aware that floating point division by 0 is legal, but integer division by 0 will crash your program.
          b) Handle this possible input when you write your divide() functions.
          c) you should warn the user if they're doing floating-point-division-by-zero but not prevent the division from happening
          d) you should warn AND prevent the division from happening if it is an integer-division-by-zero.
- 
+
  4) make them return the correct primitive type. e.g. if you're implementing the FloatType::add function, your implementation would start like this:
         float FloatType::add( float lhs, float rhs )
- 
+
  5) Do not edit main().  your job is to make your UDTs work correctly with the existing main.
        the expected program output is listed after main along with instructions on how to verify it.
 
@@ -92,6 +92,76 @@ good to go!
  */
 
 #include <iostream>
+
+struct FloatType
+{
+    float add(float lhs, float rhs )
+    {
+    return lhs + rhs;
+    };
+    float subtract( float lhs, float rhs )
+    {
+    return lhs - rhs;
+    };
+    float multiply( float lhs, float rhs )
+    {
+    return lhs * rhs;
+    };
+    float divide( float lhs, float rhs )
+    {
+    return lhs / rhs;
+    };
+
+    std::cout << "warning, floating point division by zero returns 'inf' !" << std::endl;
+
+};
+
+struct DoubleType
+{
+    double add( double lhs, double rhs )
+    {
+    return lhs + rhs;
+    };
+    double subtract( double lhs, double rhs )
+    {
+    return lhs - rhs;
+    };
+    double multiply( double lhs, double rhs )
+    {
+    return lhs * rhs;
+    };
+    double divide( double lhs, double rhs )
+    {
+    return lhs / rhs;
+    };
+
+    std::cout << "good to go!" << std::endl;
+
+};
+
+struct IntType
+{
+    int add( int lhs, int rhs )
+    {
+    return lhs + rhs;
+    };
+    int subtract( int lhs, int rhs )
+    {
+    return lhs - rhs;
+    };
+    int multiply( int lhs, int rhs )
+    {
+    return lhs * rhs;
+    };
+    int divide( int lhs, int rhs )
+    {
+    return lhs / rhs;
+    };
+
+    std::cout << "good to go!" << std::endl;
+
+};
+
 int main() 
 {
     FloatType ft;
