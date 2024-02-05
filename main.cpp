@@ -99,21 +99,24 @@ struct FloatType
     {
     return lhs + rhs;
     }
+
     float subtract(float lhs, float rhs)
     {
     return lhs - rhs;
     }
+
     float multiply(float lhs, float rhs)
     {
     return lhs * rhs;
     }
+
     float divide(float lhs, float rhs)
     {
 
-    if(rhs == 0.f)
-    {
-        std::cout << "warning, floating point division by zero returns 'inf' !\n";
-    }
+        if(rhs == 0.f)
+        {
+            std::cout << "warning, floating point division by zero returns 'inf' !\n";
+        }
         
     return lhs / rhs;
     }
@@ -126,21 +129,24 @@ struct DoubleType
     {
     return lhs + rhs;
     }
+
     double subtract(double lhs, double rhs)
     {
     return lhs - rhs;
     }
+
     double multiply(double lhs, double rhs)
     {
     return lhs * rhs;
     }
+
     double divide(double lhs, double rhs)
     {
     
-    if(rhs == 0.0)
-    {
-        std::cout << "warning, floating point division by zero returns 'inf' !\n";
-    }
+        if(rhs == 0.0)
+        {
+            std::cout << "warning, floating point division by zero returns 'inf' !\n";
+        }
         
     return lhs / rhs;
     }
@@ -153,22 +159,25 @@ struct IntType
     {
     return lhs + rhs;
     }
+
     int subtract(int lhs, int rhs)
     {
     return lhs - rhs;
     }
+
     int multiply(int lhs, int rhs)
     {
     return lhs * rhs;
     }
+
     int divide(int lhs, int rhs)
     {
 
-    if(rhs == 0)
-    {
-        std::cout << "error, integer division by zero will crash the program!\n";
-        std::cout << "returning lhs\n";
-    }
+        if(rhs == 0)
+        {
+            std::cout << "error, integer division by zero will crash the program!\n";
+            std::cout << "returning lhs\n";
+        }
         
     return lhs;
     }
