@@ -112,16 +112,13 @@ struct FloatType
 
     float divide(float lhs, float rhs)
     {
-
         if(rhs == 0.f)
         {
             std::cout << "\n";
             std::cout << "warning, floating point division by zero returns 'inf' !\n";
-        }
-        
+        }        
     return lhs / rhs;
     }
-
 };
 
 struct DoubleType
@@ -142,17 +139,14 @@ struct DoubleType
     }
 
     double divide(double lhs, double rhs)
-    {
-    
+    {  
         if(rhs == 0.0)
         {
             std::cout << "\n";
             std::cout << "warning, floating point division by zero returns 'inf' !\n";
-        }
-        
+        }        
     return lhs / rhs;
     }
-
 };
 
 struct IntType
@@ -174,20 +168,13 @@ struct IntType
 
     int divide(int lhs, int rhs)
     {
-
         if(rhs == 0)
         {
             std::cout << "error, integer division by zero will crash the program!\n";
             std::cout << "returning lhs\n";
         }
-        else
-        {
-            return 0;
-        }
-        
-    return lhs;
+        return lhs / rhs;
     }
-
 };
 
 int main()
