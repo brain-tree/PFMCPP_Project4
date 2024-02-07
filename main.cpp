@@ -172,6 +172,7 @@ struct IntType
         {
             std::cout << "error, integer division by zero will crash the program!\n";
             std::cout << "returning lhs\n";
+            return lhs;
         }
         return lhs / rhs;
     }
