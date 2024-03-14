@@ -188,6 +188,10 @@ int main()
 
 struct FloatType
 {
+
+
+    float* value = new float;
+
     float add(float lhs, float rhs)
     {
         return lhs + rhs;
@@ -216,6 +220,8 @@ struct FloatType
 
 struct DoubleType
 {
+    double* value = new double;
+
     double add(double lhs, double rhs)
     {
         return lhs + rhs;
@@ -244,6 +250,8 @@ struct DoubleType
 
 struct IntType
 {
+    int* value = new int;
+
     int add(int lhs, int rhs)
     {
         return lhs + rhs;
