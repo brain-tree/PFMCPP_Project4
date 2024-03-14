@@ -10,16 +10,21 @@ New/This/Pointers/References conclusion
     I recommend committing after you get each step working so you can revert to a working version easily if needed.
  
  0) in the blank space below, declare/define an empty struct named 'A' on a single Line. 
-     on the lines below it, write a struct named 'HeapA' that correctly shows how to own an instance of 'A' 
-         on the heap without leaking, without using smart pointers. 
+     on the lines below it, write a struct named 'HeapA' that correctly shows how to own an instance of 'A' on the heap without leaking, without using smart pointers.
  */
 
 
+struct A {};
 
-
-
-
-
+struct HeapA
+{
+    HeapA() : aPtr(new A) {}
+    ~HeapA()
+    {
+        delete aPtr;
+    }
+    A* aPtr;
+};
 
 
 
@@ -110,7 +115,7 @@ good to go!
 int main()
 {   
     //testing instruction 0
-    HeapA heapA; 
+    HeapA heapA;
 
     //assign heap primitives
     FloatType ft ( 2.0f );
