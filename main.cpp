@@ -119,8 +119,11 @@ int main()
 
     //assign heap primitives
     FloatType ft ( 2.0f );
-    DoubleType dt ( 2 );
+    ft.add().subtract().multiply().divide();
+    DoubleType dt ( 2.0 );
+    dt.add(3.0, 4.0).subtract().multiply().divide();
     IntType it ( 2 ) ;
+    it.add().subtract().multiply().divide();
 
     std::cout << "FloatType add result=" << ft.add( 2.0f ).value << std::endl;
     std::cout << "FloatType subtract result=" << ft.subtract( 2.0f ).value << std::endl;
@@ -188,7 +191,8 @@ int main()
 
 struct FloatType
 {
-
+    FloatType();
+    ~FloatType();
 
     float* value = new float;
 
@@ -216,6 +220,16 @@ struct FloatType
         }        
         return lhs / rhs;
     }
+};
+
+struct WrapFloat
+{
+    WrapFloat(FloatType* ftPtr) : floatPointer(ftPtr) {}
+    ~WrapFloat()
+    {
+        delete floatPointer;
+    }
+    FloatType* floatPointer = nullptr;
 };
 
 struct DoubleType
