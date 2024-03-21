@@ -191,17 +191,8 @@ int main()
 
 struct FloatType
 {
-//    FloatType(float initialValue)
-//    {
-//        *value = initialValue;
-//    }
     FloatType(float) : value(new float) {}
-//    ~FloatType()
-//    {
-//        delete value;
-//    }
 
-//    float* value = new float;
     float* value;
     float lhs;
 
