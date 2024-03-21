@@ -225,10 +225,9 @@ struct FloatType
 
     FloatType divide(float lhs)
     {
-        if(lhs == 0.f)
+        if(lhs == 0.f | *value == 0.f)
         {
-            std::cout << "\n";
-            std::cout << "warning, floating point division by zero returns 'inf' !\n";
+            std::cout << "warning: floating point division by zero!\n";
         }        
         *value = *value / lhs;
         return *this;
@@ -262,10 +261,9 @@ struct DoubleType
 
     DoubleType divide(double lhs)
     {  
-        if(lhs == 0.0)
+        if(lhs == 0.0 | *value == 0.0)
         {
-            std::cout << "\n";
-            std::cout << "warning, floating point division by zero returns 'inf' !\n";
+            std::cout << "warning: floating point division by zero!\n";
         }        
         *value = *value / lhs;
         return *this;
@@ -299,11 +297,10 @@ struct IntType
 
     IntType divide(int lhs)
     {
-        if(lhs == 0)
+        if(lhs == 0 | value == 0)
         {
-            std::cout << "error, integer division by zero will crash the program!\n";
-            std::cout << "returning lhs\n";
-            return lhs;
+            std::cout << "error: integer division by zero is an error and will crash the program!\n";
+            return *this;
         }
             *value = *value / lhs;
             return *this;
@@ -337,11 +334,11 @@ int main()
     std::cout << "IntType subtract result=" << *(it.subtract(2).value) << std::endl;
     std::cout << "IntType multiply result=" << *(it.multiply(2).value) << std::endl;
     std::cout << "IntType divide result=" << *(it.divide(3).value) << std::endl << std::endl;
-    std::cout << "Chain calculation = " << *((it.multiply(1000).divide(2).subtract(10).add(100)).value) << std::endl;
+    std::cout << "Chain calculation = " << *((it.multiply(1000).divide(2).subtract(10).add(100)).add(588).value) << std::endl;
 
         // FloatType object instanciation and method tests
     // --------
-    std::cout << "New value of ft = (ft + 3.0f) * 1.5f / 5.0f = " << *(ft.add( 3.0f ).multiply(1.5f).divide(5.0f).value) << std::endl;
+    std::cout << "New value of ft = (ft + 3.0f) * 1.5f / 5.0f = " << *(ft.add( 3.0f ).multiply(1.5f).divide(5.0f).multiply(0.65f).value) << std::endl;
 
     std::cout << "---------------------\n" << std::endl; 
 
