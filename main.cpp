@@ -203,6 +203,7 @@ struct FloatType
 
 //    float* value = new float;
     float* value;
+    float lhs;
 
     FloatType& add(float lhs)
     {
@@ -239,6 +240,7 @@ struct DoubleType
     DoubleType(double) : value(new double) {}
 
     double* value;
+    double lhs;
 
     DoubleType& add(double lhs)
     {
@@ -275,6 +277,7 @@ struct IntType
     IntType(int) : value(new int) {}
 
     int* value;
+    int lhs;
 
     IntType& add(int lhs)
     {
