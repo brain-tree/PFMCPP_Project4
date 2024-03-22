@@ -191,14 +191,13 @@ int main()
 
 struct FloatType
 {
-    FloatType(float) : value(new float) {}
+    FloatType(float f) : value(new float (f)) {}
 
     float* value;
     float lhs;
 
     FloatType& add(float lhs)
     {
-        *value = 2.f;
         *value = *value + lhs;
         return *this;
     }
@@ -217,7 +216,7 @@ struct FloatType
 
     FloatType divide(float lhs)
     {
-        if(lhs == 0.f | *value == 0.f)
+        if(lhs == 0.f || *value == 0.f)
         {
             std::cout << "warning: floating point division by zero!\n";
         }        
@@ -228,10 +227,9 @@ struct FloatType
 
 struct DoubleType
 {
-    DoubleType(double) : value(new double) {}
+    DoubleType(double d) : value(new double (d)) {}
 
     double* value;
-    double lhs;
 
     DoubleType& add(double lhs)
     {
@@ -254,7 +252,7 @@ struct DoubleType
 
     DoubleType divide(double lhs)
     {  
-        if(lhs == 0.0 | *value == 0.0)
+        if(lhs == 0.0 || *value == 0.0)
         {
             std::cout << "warning: floating point division by zero!\n";
         }        
@@ -265,14 +263,12 @@ struct DoubleType
 
 struct IntType
 {
-    IntType(int) : value(new int) {}
+    IntType(int i) : value(new int (i)) {}
 
     int* value;
-    int lhs;
 
     IntType& add(int lhs)
     {
-        *value = 2.0;
         *value = *value + lhs;
         return *this;
     }
@@ -291,13 +287,13 @@ struct IntType
 
     IntType divide(int lhs)
     {
-        if(lhs == 0 | value == 0)
+        if(lhs == 0 || value == 0)
         {
             std::cout << "error: integer division by zero is an error and will crash the program!\n";
             return *this;
         }
-            *value = *value / lhs;
-            return *this;
+        *value = *value / lhs;
+        return *this;
     }
 };
 
