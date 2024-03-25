@@ -194,7 +194,6 @@ struct FloatType
     FloatType(float f) : value(new float (f)) {}
 
     float* value;
-    float lhs;
 
     FloatType& add(float lhs)
     {
@@ -233,7 +232,6 @@ struct DoubleType
 
     DoubleType& add(double lhs)
     {
-        *value = 2.0;
         *value = *value + lhs;
         return *this;
     }
