@@ -138,109 +138,157 @@ struct HeapA
 
 struct FloatType
 {
-    FloatType(float f) : value(new float (f)) {}
+    FloatType(float f);
+    ~FloatType();
 
     float* value;
 
-    FloatType& add(float lhs)
-    {
-        *value = *value + lhs;
-        return *this;
-    }
+    FloatType& add(float lhs);
 
-    FloatType subtract(float lhs)
-    {
-        *value = *value - lhs;
-        return *this;
-    }
+    FloatType subtract(float lhs);
 
-    FloatType multiply(float lhs)
-    {
-        *value = *value * lhs;
-        return *this;
-    }
+    FloatType multiply(float lhs);
 
-    FloatType divide(float lhs)
-    {
-        if(lhs == 0.f || *value == 0.f)
-        {
-            std::cout << "warning: floating point division by zero!\n";
-        }        
-        *value = *value / lhs;
-        return *this;
-    }
+    FloatType divide(float lhs);
 };
+
+FloatType::FloatType(float f) : value(new float (f)) {}
+
+FloatType::~FloatType()
+{
+    delete value;
+}
+
+FloatType& FloatType::add(float lhs)
+{
+    *value = *value + lhs;
+    return *this;
+}
+
+FloatType FloatType::subtract(float lhs)
+{
+    *value = *value - lhs;
+    return *this;
+}
+
+FloatType FloatType::multiply(float lhs)
+{
+    *value = *value * lhs;
+    return *this;
+}
+
+FloatType FloatType::divide(float lhs)
+{
+    if(lhs == 0.f || *value == 0.f)
+    {
+        std::cout << "warning: floating point division by zero!\n";
+    }        
+    *value = *value / lhs;
+    return *this;
+}
 
 struct DoubleType
 {
-    DoubleType(double d) : value(new double (d)) {}
+    DoubleType(double d);
+    ~DoubleType();
 
     double* value;
 
-    DoubleType& add(double lhs)
-    {
-        *value = *value + lhs;
-        return *this;
-    }
+    DoubleType& add(double lhs);
 
-    DoubleType subtract(double lhs)
-    {
-        *value = *value - lhs;
-        return *this;
-    }
+    DoubleType subtract(double lhs);
 
-    DoubleType multiply(double lhs)
-    {
-        *value = *value * lhs;
-        return *this;
-    }
+    DoubleType multiply(double lhs);
 
-    DoubleType divide(double lhs)
-    {  
-        if(lhs == 0.0 || *value == 0.0)
-        {
-            std::cout << "warning: floating point division by zero!\n";
-        }        
-        *value = *value / lhs;
-        return *this;
-    }
+    DoubleType divide(double lhs);
 };
+
+DoubleType::DoubleType(double d) : value(new double (d)) {}
+
+DoubleType::~DoubleType()
+{
+    delete value;
+}
+
+DoubleType& DoubleType::add(double lhs)
+{
+    *value = *value + lhs;
+    return *this;
+}
+
+DoubleType DoubleType::subtract(double lhs)
+{
+    *value = *value - lhs;
+    return *this;
+}
+
+DoubleType DoubleType::multiply(double lhs)
+{
+    *value = *value * lhs;
+    return *this;
+}
+
+DoubleType DoubleType::divide(double lhs)
+{  
+    if(lhs == 0.0 || *value == 0.0)
+    {
+        std::cout << "warning: floating point division by zero!\n";
+    }        
+    *value = *value / lhs;
+    return *this;
+}
 
 struct IntType
 {
-    IntType(int i) : value(new int (i)) {}
+    IntType(int i);
+    ~IntType();
 
     int* value;
 
-    IntType& add(int lhs)
-    {
-        *value = *value + lhs;
-        return *this;
-    }
+    IntType& add(int lhs);
 
-    IntType subtract(int lhs)
-    {
-        *value = *value - lhs;
-        return *this;
-    }
+    IntType subtract(int lhs);
 
-    IntType multiply(int lhs)
-    {
-        *value *= lhs;
-        return *this;
-    }
+    IntType multiply(int lhs);
 
-    IntType divide(int lhs)
-    {
-        if(lhs == 0 || value == nullptr)
-        {
-            std::cout << "error: integer division by zero is an error and will crash the program!\n";
-            return *this;
-        }
-        *value = *value / lhs;
-        return *this;
-    }
+    IntType divide(int lhs);
 };
+
+IntType::IntType(int i) : value(new int (i)) {}
+
+IntType::~IntType()
+{
+    delete value;
+}
+
+IntType& IntType::add(int lhs)
+{
+    *value = *value + lhs;
+    return *this;
+}
+
+IntType IntType::subtract(int lhs)
+{
+    *value = *value - lhs;
+    return *this;
+}
+
+IntType IntType::multiply(int lhs)
+{
+    *value *= lhs;
+    return *this;
+}
+
+IntType IntType::divide(int lhs)
+{
+    if(lhs == 0 || value == nullptr)
+    {
+        std::cout << "error: integer division by zero is an error and will crash the program!\n";
+        return *this;
+    }
+    *value = *value / lhs;
+    return *this;
+}
 
 int main()
 {   
