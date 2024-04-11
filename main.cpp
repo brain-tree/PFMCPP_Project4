@@ -125,7 +125,6 @@ struct FloatType
 {
     FloatType(float f);
 
-
     FloatType& add(float lhs);
 
     FloatType subtract(float lhs);
@@ -141,8 +140,6 @@ struct FloatType
 };
 
 FloatType::FloatType(float f) : value(new float (f)) {}
-
-
 
 FloatType& FloatType::add(float lhs)
 {
@@ -176,7 +173,6 @@ struct DoubleType
 {
     DoubleType(double d);
 
-
     DoubleType& add(double lhs);
 
     DoubleType subtract(double lhs);
@@ -192,8 +188,6 @@ struct DoubleType
 };
 
 DoubleType::DoubleType(double d) : value(new double (d)) {}
-
-
 
 DoubleType& DoubleType::add(double lhs)
 {
@@ -243,8 +237,6 @@ struct IntType
 };
 
 IntType::IntType(int i) : value(new int (i)) {}
-
-
 
 IntType& IntType::add(int lhs)
 {
