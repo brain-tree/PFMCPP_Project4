@@ -53,16 +53,30 @@ Project 4: Part 4 / 9
  You will need to use Forward Declaration and out-of-class definitions to complete this.
  */
 
-
+struct FloatType;
+struct DoubleType;
+struct IntType;
 
 struct Point
 {
+    Point(const FloatType& _x, const FloatType& _y);
+    Point(const DoubleType& _x, const DoubleType& _y);
+    Point(const IntType& _x, const IntType& _y);
+    ~Point();
+
+    Point& multiply(FloatType& f);
+    Point& multiply(DoubleType& d);
+    Point& multiply(IntType& i);
+
     Point& multiply(float m)
     {
         x *= m;
         y *= m;
         return *this;
     }
+
+    void toString();
+
 private:
     float x{0}, y{0};
 };
@@ -521,6 +535,43 @@ IntType& IntType::powInternal(int i)
 {
     *value = std::power(*value, i);
     return *this;
+}
+
+// implementations for Point class
+
+Point::Point(const FloatType& _x, const FloatType& _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) { }
+
+Point::Point(const DoubleType& _x, const DoubleType& _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) { }
+
+Point::Point(const IntType& _x, const IntType& _y) : x(static_cast<float>(_x)), y(static_cast<float>(_y)) { }
+
+Point::~Point() {}
+
+Point& Point::multiply(FloatType& f)
+{
+    return multiply(static_cast<float>(f));
+}
+
+Point& Point::multiply(DoubleType& d)
+{
+    return multiply(static_cast<double>(d));
+}
+
+Point& Point::multiply(IntType& i)
+{
+    return multiply(static_cast<int>(i));
+}
+
+Point& Point::multiply(float m)
+{
+    x *= m;
+    y *= m;
+    return *this;
+}
+
+void Point::toString()
+{
+    std::cout << "Point { x: " << x << ", y: " << y << " }" << std::endl;
 }
 
 void part3()
