@@ -217,7 +217,8 @@ struct IntType;
 
 struct FloatType
 {
-    explicit FloatType(float f);
+    explicit FloatType(float floatPrim);
+    ~FloatType();
 
     FloatType& add(float lhs);
 
@@ -227,7 +228,7 @@ struct FloatType
 
     FloatType& divide(float lhs);
 
-    operator float() const{return *value;}
+    operator float() const {return *value;}
 
     FloatType& pow(float f);
     FloatType& pow(const IntType& i);
@@ -241,7 +242,8 @@ struct FloatType
 
 struct DoubleType
 {
-    explicit DoubleType(double d);
+    explicit DoubleType(double doublePrim);
+    ~DoubleType();
 
     DoubleType& add(double lhs);
 
@@ -251,7 +253,7 @@ struct DoubleType
 
     DoubleType& divide(double lhs);
 
-    operator double() const{return *value;}
+    operator double() const {return *value;}
 
     DoubleType& pow(double d);
     DoubleType& pow(const IntType& i);
@@ -265,8 +267,8 @@ struct DoubleType
 
 struct IntType
 {
-    explicit IntType(int i);
-
+    explicit IntType(int intPrim);
+    ~IntType();
 
     IntType& add(int lhs);
 
@@ -276,7 +278,7 @@ struct IntType
 
     IntType& divide(int lhs);
 
-    operator int() const{return *value;}
+    operator int() const {return *value;}
 
     IntType& pow(int i);
     IntType& pow(const IntType& i);
@@ -290,7 +292,13 @@ struct IntType
 
 // FLOATTYPE IMPLEMENTATIONS
 
-FloatType::FloatType(float f) : value(new float (f)) {}
+FloatType::FloatType(float floatPrim) : value(new float(floatPrim)) {}
+
+FloatType::~FloatType()
+{
+    delete value;
+    value = nullptr;
+}
 
 FloatType& FloatType::add(float lhs)
 {
@@ -348,7 +356,13 @@ FloatType& FloatType::powInternal(float f)
 
 // DOUBLETYPE IMPLEMENTATIONS
 
-DoubleType::DoubleType(double d) : value(new double (d)) {}
+DoubleType::DoubleType(double doublePrim) : value(new double(doublePrim)) {}
+
+DoubleType::~DoubleType()
+{
+    delete value;
+    value = nullptr;
+}
 
 DoubleType& DoubleType::add(double lhs)
 {
@@ -406,7 +420,13 @@ DoubleType& DoubleType::powInternal(double d)
 
 // INTTYPE IMPLEMENTATIONS
 
-IntType::IntType(int i) : value(new int (i)) {}
+IntType::IntType(int intPrimitive) : value(new int(intPrimitive)) {}
+
+IntType::~IntType()
+{
+    delete value;
+    value = nullptr;
+}
 
 IntType& IntType::add(int lhs)
 {
@@ -433,7 +453,7 @@ IntType& IntType::divide(int lhs)
         std::cout << "error: integer division by zero is an error and will crash the program!\n";
         return *this;
     }
-    *value = *value / lhs;
+    *value = static_cast<int>(*value / lhs);
     return *this;
 }
 
@@ -459,7 +479,7 @@ IntType& IntType::pow(const DoubleType& d)
 
 IntType& IntType::powInternal(int i)
 {
-    *value = std::pow(*value, i);
+    *value = static_cast<int>(std::pow(*value, i));
     return *this;
 }
 
@@ -482,12 +502,13 @@ Point& Point::multiply(FloatType& f)
 
 Point& Point::multiply(DoubleType& d)
 {
-    return multiply(static_cast<double>(d));
+    return multiply(static_cast<float>(static_cast<double>(d)));
 }
 
 Point& Point::multiply(IntType& i)
 {
-    return multiply(static_cast<int>(i));
+    //return multiply(static_cast<int>(i));
+    return multiply(static_cast<float>(static_cast<int>(i)));
 }
 
 Point& Point::multiply(float m)
