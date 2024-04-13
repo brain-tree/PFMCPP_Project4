@@ -295,8 +295,14 @@ struct FloatType
 
     operator float() {return *value;}
 
+    FloatType& pow(float f);
+    FloatType& pow(const IntType& i);
+    FloatType& pow(const FloatType& f);
+    FloatType& pow(const DoubleType& d);
+
     private:
         float* value = nullptr;
+        FloatType& powerInternal(const float f);
 };
 
 FloatType::FloatType(float f) : value(new float (f)) {}
@@ -343,8 +349,14 @@ struct DoubleType
 
     operator double() {return *value;}
 
+    DoubleType& pow(float f);
+    DoubleType& pow(const IntType& i);
+    DoubleType& pow(const FloatType& f);
+    DoubleType& pow(const DoubleType& d);
+
     private:
         double* value = nullptr;
+        DoubleType& powerInternal(const double d);
 };
 
 DoubleType::DoubleType(double d) : value(new double (d)) {}
@@ -392,8 +404,14 @@ struct IntType
 
     operator int() {return *value;}
 
+    IntType& pow(float f);
+    IntType& pow(const IntType& i);
+    IntType& pow(const FloatType& f);
+    IntType& pow(const DoubleType& d);
+
     private:
         int* value = nullptr;
+        IntType& powerInternal(const int i);
 };
 
 IntType::IntType(int i) : value(new int (i)) {}
