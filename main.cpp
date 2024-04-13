@@ -302,7 +302,7 @@ struct FloatType
 
     private:
         float* value = nullptr;
-        FloatType& powerInternal(const float f);
+        FloatType& powInternal(const float f);
 };
 
 FloatType::FloatType(float f) : value(new float (f)) {}
@@ -335,6 +335,32 @@ FloatType& FloatType::divide(float lhs)
     return *this;
 }
 
+FloatType& FloatType::pow(float f)
+{
+    return powInternal(f);
+}
+
+FloatType& FloatType::pow(const IntType& i)
+{
+    return powInternal(static_cast<float>(i));
+}
+
+FloatType& FloatType::pow(const FloatType& f)
+{
+    return powInternal(static_cast<float>(f));
+}
+
+FloatType& FloatType::pow(const DoubleType& d)
+{
+    return powInternal(static_cast<float>(d));
+}
+
+FloatType& FloatType::powInternal(float f)
+{
+    *value = std::power(*value, f);
+    return *this;
+}
+
 struct DoubleType
 {
     DoubleType(double d);
@@ -356,7 +382,7 @@ struct DoubleType
 
     private:
         double* value = nullptr;
-        DoubleType& powerInternal(const double d);
+        DoubleType& powInternal(const double d);
 };
 
 DoubleType::DoubleType(double d) : value(new double (d)) {}
@@ -389,6 +415,32 @@ DoubleType& DoubleType::divide(double lhs)
     return *this;
 }
 
+DoubleType& DoubleType::pow(float d)
+{
+    return powInternal(d);
+}
+
+DoubleType& DoubleType::pow(const IntType& i)
+{
+    return powInternal(static_cast<double>(i));
+}
+
+DoubleType& DoubleType::pow(const FloatType& f)
+{
+    return powInternal(static_cast<double>(f));
+}
+
+DoubleType& DoubleType::pow(const DoubleType& d)
+{
+    return powInternal(static_cast<double>(d));
+}
+
+DoubleType& DoubleType::powInternal(double d)
+{
+    *value = std::power(*value, d);
+    return *this;
+}
+
 struct IntType
 {
     IntType(int i);
@@ -411,7 +463,7 @@ struct IntType
 
     private:
         int* value = nullptr;
-        IntType& powerInternal(const int i);
+        IntType& powInternal(const int i);
 };
 
 IntType::IntType(int i) : value(new int (i)) {}
@@ -442,6 +494,32 @@ IntType& IntType::divide(int lhs)
         return *this;
     }
     *value = *value / lhs;
+    return *this;
+}
+
+IntType& IntType::pow(int i)
+{
+    return powInternal(i);
+}
+
+IntType& IntType::pow(const IntType& i)
+{
+    return powInternal(static_cast<int>(i));
+}
+
+IntType& IntType::pow(const FloatType& f)
+{
+    return powInternal(static_cast<int>(f));
+}
+
+IntType& IntType::pow(const DoubleType& d)
+{
+    return powInternal(static_cast<int>(d));
+}
+
+IntType& IntType::powInternal(int i)
+{
+    *value = std::power(*value, i);
     return *this;
 }
 
