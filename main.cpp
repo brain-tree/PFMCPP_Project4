@@ -327,13 +327,13 @@ struct FloatType
     explicit FloatType(float floatPrim);
     ~FloatType();
 
-    FloatType& add(float lhs);
+    FloatType& operator+=(float lhs);
 
-    FloatType& subtract(float lhs);
+    FloatType& operator-=(float lhs);
 
-    FloatType& multiply(float lhs);
+    FloatType& operator*=(float lhs);
 
-    FloatType& divide(float lhs);
+    FloatType& operator/=(float lhs);
 
     operator float() const {return *value;}
 
@@ -352,13 +352,13 @@ struct DoubleType
     explicit DoubleType(double doublePrim);
     ~DoubleType();
 
-    DoubleType& add(double lhs);
+    DoubleType& operator+=(double lhs);
 
-    DoubleType& subtract(double lhs);
+    DoubleType& operator-=(double lhs);
 
-    DoubleType& multiply(double lhs);
+    DoubleType& operator*=(double lhs);
 
-    DoubleType& divide(double lhs);
+    DoubleType& operator/=(double lhs);
 
     operator double() const {return *value;}
 
@@ -377,13 +377,13 @@ struct IntType
     explicit IntType(int intPrim);
     ~IntType();
 
-    IntType& add(int lhs);
+    IntType& operator+=(int lhs);
 
-    IntType& subtract(int lhs);
+    IntType& operator-=(int lhs);
 
-    IntType& multiply(int lhs);
+    IntType& operator*=(int lhs);
 
-    IntType& divide(int lhs);
+    IntType& operator/=(int lhs);
 
     operator int() const {return *value;}
 
@@ -407,25 +407,25 @@ FloatType::~FloatType()
     value = nullptr;
 }
 
-FloatType& FloatType::add(float lhs)
+FloatType& FloatType::operator+=(float lhs)
 {
     *value = *value + lhs;
     return *this;
 }
 
-FloatType& FloatType::subtract(float lhs)
+FloatType& FloatType::operator-=(float lhs)
 {
     *value = *value - lhs;
     return *this;
 }
 
-FloatType& FloatType::multiply(float lhs)
+FloatType& FloatType::operator*=(float lhs)
 {
     *value = *value * lhs;
     return *this;
 }
 
-FloatType& FloatType::divide(float lhs)
+FloatType& FloatType::operator/=(float lhs)
 {
     if(lhs == 0.f || *value == 0.f)
     {
@@ -471,25 +471,25 @@ DoubleType::~DoubleType()
     value = nullptr;
 }
 
-DoubleType& DoubleType::add(double lhs)
+DoubleType& DoubleType::operator+=(double lhs)
 {
     *value = *value + lhs;
     return *this;
 }
 
-DoubleType& DoubleType::subtract(double lhs)
+DoubleType& DoubleType::operator-=(double lhs)
 {
     *value = *value - lhs;
     return *this;
 }
 
-DoubleType& DoubleType::multiply(double lhs)
+DoubleType& DoubleType::operator*=(double lhs)
 {
     *value = *value * lhs;
     return *this;
 }
 
-DoubleType& DoubleType::divide(double lhs)
+DoubleType& DoubleType::operator/=(double lhs)
 {  
     if(lhs == 0.0 || *value == 0.0)
     {
@@ -535,25 +535,25 @@ IntType::~IntType()
     value = nullptr;
 }
 
-IntType& IntType::add(int lhs)
+IntType& IntType::operator+=(int lhs)
 {
     *value = *value + lhs;
     return *this;
 }
 
-IntType& IntType::subtract(int lhs)
+IntType& IntType::operator-=(int lhs)
 {
     *value = *value - lhs;
     return *this;
 }
 
-IntType& IntType::multiply(int lhs)
+IntType& IntType::operator*=(int lhs)
 {
     *value *= lhs;
     return *this;
 }
 
-IntType& IntType::divide(int lhs)
+IntType& IntType::operator/=(int lhs)
 {
     if(lhs == 0 || value == nullptr)
     {
