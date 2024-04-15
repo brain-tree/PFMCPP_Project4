@@ -628,11 +628,12 @@ void part3()
     it -= static_cast<int>(ft);
     std::cout << "The result of IntType divided by 3.14 multiplied by DoubleType minus FloatType is: " << it << std::endl;
 
+    std::cout << "An operation followed by attempts to divide by 0, which are ignored and warns user: " << std::endl;
+    
     it *= it;
     it /= 0;
     it /= 0.0f;
     it /= 0.0;
-    std::cout << "An operation followed by attempts to divide by 0, which are ignored and warns user: " << std::endl;
     
     std::cout << it << std::endl;
 
@@ -661,7 +662,7 @@ void part4()
     DoubleType dtExp(2.0);
 
     // Power tests with FloatType
-    std::cout << "Power tests with FloatType" << std::endl;
+    std::cout << "Power tests with FloatType " << std::endl;
     std::cout << "pow(ft1, floatExp) = " << ft1 << "^" << floatExp << " = " << ft1.pow(floatExp)  << std::endl;
     std::cout << "pow(ft1, itExp) = " << ft1 << "^" << itExp << " = " << ft1.pow(itExp)  << std::endl;
     std::cout << "pow(ft1, ftExp) = " << ft1 << "^" << ftExp << " = " << ft1.pow(ftExp)  << std::endl;    
@@ -669,7 +670,7 @@ void part4()
     std::cout << "---------------------\n" << std::endl;  
 
     // Power tests with DoubleType
-    std::cout << "Power tests with DoubleType" << std::endl;
+    std::cout << "Power tests with DoubleType " << std::endl;
     std::cout << "pow(dt1, doubleExp) = " << dt1 << "^" << doubleExp << " = " << dt1.pow(intExp)  << std::endl;
     std::cout << "pow(dt1, itExp) = " << dt1 << "^" << itExp << " = " << dt1.pow(itExp)  << std::endl;
     std::cout << "pow(dt1, ftExp) = " << dt1 << "^" << ftExp << " = " << dt1.pow(ftExp)  << std::endl;    
@@ -677,7 +678,7 @@ void part4()
     std::cout << "---------------------\n" << std::endl;    
 
     // Power tests with IntType
-    std::cout << "Power tests with IntType" << std::endl;
+    std::cout << "Power tests with IntType " << std::endl;
     std::cout << "pow(it1, intExp) = " << it1 << "^" << intExp << " = " << it1.pow(intExp)  << std::endl;
     std::cout << "pow(it1, itExp) = " << it1 << "^" << itExp << " = " << it1.pow(itExp)  << std::endl;
     std::cout << "pow(it1, ftExp) = " << it1 << "^" << ftExp << " = " << it1.pow(ftExp)  << std::endl;    
@@ -755,7 +756,7 @@ int main()
     dt *= 2.0;
     std::cout << "DoubleType multiply result=" << dt << std::endl;
     dt /= static_cast<double>(5.f);
-    std::cout << "DoubleType divide result=" << dt << std::endl;
+    std::cout << "DoubleType divide result=" << dt << std::endl << std::endl;
 
     it += 2;
     std::cout << "IntType add result=" << it << std::endl;
@@ -768,7 +769,7 @@ int main()
     it *= 1000;
     it /= 2;
     it -= 10;
-    it *= 100;
+    it += 100;
     std::cout << "Chain calculation = " << it << std::endl;
 
         // FloatType object instanciation and method tests
