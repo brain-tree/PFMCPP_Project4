@@ -288,6 +288,9 @@ struct FloatType
     FloatType& pow(const FloatType& f);
     FloatType& pow(const DoubleType& d);
 
+    FloatType& apply(std::function<FloatType&(float&)> func);
+    FloatType& apply(void(*func)(float&));
+
     private:
         float* value = nullptr;
         FloatType& powInternal(const float f);
@@ -313,6 +316,9 @@ struct DoubleType
     DoubleType& pow(const FloatType& f);
     DoubleType& pow(const DoubleType& d);
 
+    DoubleType& apply(std::function<DoubleType&(double&)> func);
+    DoubleType& apply(void(*func)(double&));
+
     private:
         double* value = nullptr;
         DoubleType& powInternal(const double d);
@@ -337,6 +343,9 @@ struct IntType
     IntType& pow(const IntType& i);
     IntType& pow(const FloatType& f);
     IntType& pow(const DoubleType& d);
+
+    IntType& apply(std::function<IntType&(int&)> func);
+    IntType& apply(void(*func)(int&));
 
     private:
         int* value = nullptr;
@@ -407,6 +416,24 @@ FloatType& FloatType::powInternal(float f)
     return *this;
 }
 
+FloatType& FloatType::apply(std::function<FloatType&(float&)> func)
+{
+    if(func)
+    {
+        return func(*value);
+    }
+    return *this;
+}
+
+FloatType& FloatType::apply(void(*func)(float&))
+{
+    if(func)
+        {
+            return func(*value);
+        }
+        return *this;
+}
+
 // DOUBLETYPE IMPLEMENTATIONS
 
 DoubleType::DoubleType(double doublePrim) : value(new double(doublePrim)) {}
@@ -469,6 +496,24 @@ DoubleType& DoubleType::powInternal(double d)
 {
     *value = std::pow(*value, d);
     return *this;
+}
+
+DoubleType& DoubleType::apply(std::function<DoubleType&(double&)> func)
+{
+    if(func)
+    {
+        return func(*value);
+    }
+    return *this;
+}
+
+DoubleType& DoubleType::apply(void(*func)(double&))
+{
+    if(func)
+        {
+            return func(*value);
+        }
+        return *this;
 }
 
 // INTTYPE IMPLEMENTATIONS
@@ -534,6 +579,24 @@ IntType& IntType::powInternal(int i)
 {
     *value = static_cast<int>(std::pow(*value, i));
     return *this;
+}
+
+IntType& IntType::apply(std::function<IntType&(int&)> func)
+{
+    if(func)
+    {
+        return func(*value);
+    }
+    return *this;
+}
+
+IntType& IntType::apply(void(*func)(int&))
+{
+    if(func)
+        {
+            return func(*value);
+        }
+        return *this;
 }
 
 // implementations for Point class
