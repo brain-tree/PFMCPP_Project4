@@ -268,10 +268,10 @@ struct HeapA
 
 template<typename NumericType>
 struct Numeric
-{
-    using Type = NumericType;   // #3
+{    
+    using Type = NumericType;
 
-    Numeric(Type t) : value( std::make_unique<Type>(t) ) { }
+    Numeric(Type t) : value(std::make_unique<Type>(t)) {}
 
     ~Numeric() 
     {
@@ -282,23 +282,82 @@ struct Numeric
 
     Numeric& operator += (const Type& t)
     {
-        *value =+ t;
+        *value += t;
         return *this;
     }
 
     Numeric& operator -= (const Type& t)
     {
-        *value =+ t;
+        *value -= t;
         return *this;
     }
 
     Numeric& operator *= (const Type& t)
     {
-        *value =+ t;
+        *value *= t;
         return *this;
     }
 
-    
+    template<typename DivType> 
+    Numeric& operator /= (const DivType& t)
+    {
+        if constexpr (std::is_same<Type,int>::value)
+        {
+            if constexpr (std::is_same<DivType,int>::value)
+            {
+                if (t == 0)
+                {
+                    std::cerr << "can't divide integers by zero!" << std::endl;
+                    return *this;
+                }
+            }
+            else if (t < std::numeric_limits<DivisorType>::epsilon())
+            {
+                std::cerr << "can't divide integers by zero!" << std::endl;
+                return *this;
+            }
+        } 
+        else if (t < std::numeric_limits<Type>::epsilon())
+        {
+            std::cerr << "warning: floating point division by zero!" << std::endl;
+        }
+
+        *value /= t;
+        return *this;
+    }
+
+    Numeric& pow(const Type& t)
+    {
+        return powInternal(static_cast<Type>(t));
+    }
+
+    Numeric& apply( std::function<Numeric&(std::unique_ptr<Type>&)> stdFunction)
+    {
+        if(stdFunction)
+        {
+            return stdFunction(value);
+        }
+
+        return *this; 
+    }
+
+    Numeric& apply(void(*freeFunction)(std::unique_ptr<Type>&))
+    {
+        if(freeFunction)
+        {
+            freeFunction(value);
+        }
+
+        return *this;
+    }
+
+private:
+    std::unique_ptr<Type> value;
+    Numeric& powInternal(Type t)
+    {
+        *value = static_cast<Type>(std::pow(*value,t));
+        return *this;
+    }
 };
 
 struct FloatType;
