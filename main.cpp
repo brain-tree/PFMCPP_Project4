@@ -223,6 +223,7 @@ Use a service like https://www.diffchecker.com/diff to compare your output.
 #include <cmath>
 #include <functional>
 #include <memory>
+#include <limits>
 
 template<typename NumericType>
 struct Numeric
@@ -265,7 +266,7 @@ struct Numeric
             {
                 if (t == 0)
                 {
-                    std::cerr << "can't divide integers by zero!" << std::endl;
+                    std::cerr << "error: integer division by zero is an error and will crash the program!" << std::endl;
                     return *this;
                 }
             }
@@ -275,12 +276,12 @@ struct Numeric
                 return *this;
             }
         } 
-        else if (t < std::numeric_limits<Type>::epsilon())
+        else if (static_cast<float>(t) < std::numeric_limits<Type>::epsilon())
         {
             std::cerr << "warning: floating point division by zero!" << std::endl;
         }
 
-        *value /= t;
+        *value /= static_cast<Type>(t);
         return *this;
     }
 
@@ -430,7 +431,7 @@ void part3()
     ft *= ft;
     ft *= ft;
     ft /= it;
-    std::cout << "The result of FloatType^3 divided by IntType is: " << ft << std::endl;
+    std::cout << "The result of FloatType^4 divided by IntType is: " << ft << std::endl;
 
     dt *= 3;
     dt += it;
@@ -475,8 +476,8 @@ void part4()
 
     // Power tests with FloatType
     std::cout << "Power tests with FloatType " << std::endl;
-    std::cout << "pow(ft1, floatExp) = " << ft1 << "^" << floatExp << " = " << ft1.pow(floatExp)  << std::endl;
-    std::cout << "pow(ft1, itExp) = " << ft1 << "^" << itExp << " = " << ft1.pow(itExp)  << std::endl;
+    std::cout << "pow(ft1, floatExp) = " << ft1 << "^" << floatExp << " = " << ft1.pow(static_cast<float>(floatExp))  << std::endl;
+    std::cout << "pow(ft1, itExp) = " << ft1 << "^" << itExp << " = " << ft1.pow(static_cast<float>(itExp))  << std::endl;
     std::cout << "pow(ft1, ftExp) = " << ft1 << "^" << ftExp << " = " << ft1.pow(ftExp)  << std::endl;
     std::cout << "pow(ft1, dtExp) = " << ft1 << "^" << dtExp << " = " << ft1.pow(static_cast<float>(dtExp)) << std::endl;
     std::cout << "---------------------\n" << std::endl;
