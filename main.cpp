@@ -394,10 +394,10 @@ FloatType& FloatType::apply(std::function<FloatType&(float&)> func)
 FloatType& FloatType::apply(void(*func)(float&))
 {
     if(func)
-        {
-            func(*value);
-        }
-        return *this;
+    {
+        func(*value);
+    }
+    return *this;
 }
 
 void myFloatFreeFunct(float& value)
@@ -481,10 +481,10 @@ DoubleType& DoubleType::apply(std::function<DoubleType&(double&)> func)
 DoubleType& DoubleType::apply(void(*func)(double&))
 {
     if(func)
-        {
-            func(*value);
-        }
-        return *this;
+    {
+        func(*value);
+    }
+    return *this;
 }
 
 void myDoubleFreeFunct(double& value)
@@ -569,10 +569,10 @@ IntType& IntType::apply(std::function<IntType&(int&)> func)
 IntType& IntType::apply(void(*func)(int&))
 {
     if(func)
-        {
-            func(*value);
-        }
-        return *this;
+    {
+        func(*value);
+    }
+    return *this;
 }
 
 void myIntFreeFunct(int& value)
