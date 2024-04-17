@@ -500,9 +500,9 @@ void part4()
     // ------------------------------------------------------------
     //                          Point tests
     // ------------------------------------------------------------
-    Numeric ft2(3.0f);
-    Numeric dt2(4.0);
-    Numeric it2(5);
+    Numeric<float> ft2(3.0f);
+    Numeric<double> dt2(4.0);
+    Numeric<int> it2(5);
     float floatMul = 6.0f;
 
     // Point tests with float
@@ -595,9 +595,9 @@ void part6()
 
 void part7()
 {
-    Numeric ft3(3.0f);
-    Numeric dt3(4.0);
-    Numeric it3(5);
+    Numeric<float> ft3(3.0f);
+    Numeric<double> dt3(4.0);
+    Numeric<int> it3(5);
 
     std::cout << "Calling Numeric<float>::apply() using a lambda (adds 7.0f) and Numeric<float> as return type:" << std::endl;
     std::cout << "ft3 before: " << ft3 << std::endl;
@@ -659,7 +659,6 @@ void part7()
 
 int main()
 {
-    //assign heap primitives
     Numeric<float> ft(2.0f);
     Numeric<double> dt(2);
     Numeric<int> it(2);
