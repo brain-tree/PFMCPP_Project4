@@ -296,7 +296,6 @@ struct Numeric
         {
             return stdFunction(value);
         }
-
         return *this; 
     }
 
@@ -306,7 +305,6 @@ struct Numeric
         {
             freeFunction(value);
         }
-
         return *this;
     }
 
