@@ -23,7 +23,7 @@ Create a branch named Part8
  1) Here is a starting point for how to implement your Temporary struct.
  */
 
-
+#include <typeinfo>
 template<typename NumericType>
 struct Temporary
 {
@@ -32,16 +32,17 @@ struct Temporary
         std::cout << "I'm a Temporary<" << typeid(v).name() << "> object, #"
                   << counter++ << std::endl;
     }
-    /*
-     revise these conversion functions to read/write to 'v' here
-     hint: what qualifier do read-only functions usually have?
-     */
+
     operator NumericType() const { return v; }
     operator NumericType&() { return v; }
+
 private:
     static int counter;
     NumericType v;
 };
+
+template<typename NumericType>
+int Temporary<NumericType>::counter {0};
 
 /*
  2) add the definition of Temporary::counter here, which is a static variable and must be defined outside of the class.
@@ -52,6 +53,7 @@ private:
  3) You'll need to template your overloaded math operator functions in your Templated Class from Ch5 p04
     use static_cast to convert whatever type is passed in to your template's NumericType before performing the +=, -=, etc.  here's an example implementation:
  */
+/*
 namespace example
 {
 template<typename NumericType>
@@ -67,7 +69,7 @@ struct Numeric
     //snip
 };
 }
-
+*/
 /*
  4) remove your specialized <double> template of your Numeric<T> class from the previous task (ch5 p04)
     replace the 2 apply() functions in your Numeric<T> with the single templated apply() function from the specialized <double> template.
@@ -228,7 +230,6 @@ int main()
 #include <functional>
 #include <memory>
 #include <limits>
-#include <typeinfo>
 
 template<typename NumericType>
 struct Numeric
@@ -245,21 +246,21 @@ struct Numeric
     operator Type() const {return *value;}
 
     Numeric& operator+=(const Type& t)
-    {
-        *value += t;
-        return *this;
+    { 
+        *value += static_cast<NumericType>(o); 
+        return *this; 
     }
 
     Numeric& operator-=(const Type& t)
-    {
-        *value -= t;
-        return *this;
+    { 
+        *value -= static_cast<NumericType>(o); 
+        return *this; 
     }
 
     Numeric& operator*=(const Type& t)
-    {
-        *value *= t;
-        return *this;
+    { 
+        *value *= static_cast<NumericType>(o); 
+        return *this; 
     }
 
     template<typename DivType> 
@@ -286,7 +287,7 @@ struct Numeric
             std::cerr << "warning: floating point division by zero!" << std::endl;
         }
 
-        *value /= static_cast<Type>(t);
+        *value /= static_cast<NumericType>(o); 
         return *this;
     }
 
