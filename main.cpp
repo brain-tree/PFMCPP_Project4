@@ -86,6 +86,16 @@ struct Temporary
                   << counter++ << std::endl;
     }
 
+    Temporary(Temporary&& other) : v(std::move(other.v)) {}
+
+    Temporary& operator=(Temporary&& other)
+    {
+        v = std::move(other.v);
+        return *this;
+    }
+
+    ~Temporary() = default;
+
     operator NumericType() const 
     { 
         return v;
