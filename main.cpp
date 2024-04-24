@@ -136,14 +136,33 @@ struct Numeric
 
     Numeric(Type t) : value(std::make_unique<Type>(t)) {}
 
-    ~Numeric() 
+    Numeric(Numeric&& other)
     {
-        value = nullptr;
+        value = std::move(other.value);
     }
 
-    operator Type() const {return *value;}
-    operator NumericType() const { return *value; }
-    operator NumericType&() { return *value; }
+    Numeric operator=(Numeric&& other)
+    {
+        value = std::move(other.value);
+        return *this;
+    }
+           
+    ~Numeric() = default;
+
+    operator Type() const
+    {
+        return *value;
+    }
+
+    operator NumericType() const
+    { 
+        return *value;
+    }
+
+    operator NumericType&()
+    { 
+        return *value;
+    }
 
 template<typename OtherType>
     Numeric& operator=(const OtherType& o) 
