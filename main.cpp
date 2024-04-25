@@ -75,6 +75,7 @@ Use a service like https://www.diffchecker.com/diff to compare your output.
 #include <iostream>
 #include <cmath>
 #include <functional>
+#include <limits>
 #include "LeakedObjectDetector.h"
 
 template<typename NumericType>
@@ -131,40 +132,40 @@ int Temporary<Type>::counter = 0;
 
 template<typename NumericType>
 struct Numeric
-{    
+{
     using Type = Temporary<NumericType>;
 
-    Numeric(Type t) : value(std::make_unique<Type>(t)) {}
+    Numeric(NumericType t) : value( std::make_unique<Type>(t) ) { }
 
     Numeric(Numeric&& other)
     {
         value = std::move(other.value);
     }
 
-    Numeric operator=(Numeric&& other)
+    Numeric& operator= (Numeric&& other)
     {
         value = std::move(other.value);
         return *this;
-    }
-           
+    } 
+
     ~Numeric() = default;
 
     operator Type() const
-    {
+    { 
         return *value;
     }
 
     operator NumericType() const
-    { 
+    {
         return *value;
     }
 
     operator NumericType&()
-    { 
+    {
         return *value;
     }
 
-template<typename OtherType>
+    template<typename OtherType>
     Numeric& operator=(const OtherType& o) 
     { 
         *value = static_cast<NumericType>(o); 
@@ -172,28 +173,28 @@ template<typename OtherType>
     }
 
     template<typename OtherType>
-    Numeric& operator+=(const OtherType& o) // #3
+    Numeric& operator+=(const OtherType& o)
     {
         *value += static_cast<NumericType>(o);
         return *this;
     }
 
     template<typename OtherType>
-    Numeric& operator-=(const OtherType& o) // #3
+    Numeric& operator-=(const OtherType& o)
     { 
         *value -= static_cast<NumericType>(o); 
         return *this; 
     }
 
     template<typename OtherType>
-    Numeric& operator*=(const OtherType& o) // #3
+    Numeric& operator*=(const OtherType& o)
     {
         *value *= static_cast<NumericType>(o);
         return *this;
     }
 
     template<typename OtherType> 
-    Numeric& operator/=(const OtherType& otherType) // #3
+    Numeric& operator/=(const OtherType& otherType)
     {
         // template type is int
         if constexpr (std::is_same<NumericType,int>::value)
@@ -208,14 +209,14 @@ template<typename OtherType>
                     return *this;
                 }
             }
-            else if ( otherType < std::numeric_limits<OtherType>::epsilon() )
+            else if (otherType < std::numeric_limits<OtherType>::epsilon())
             {
                 // else if function parameter is less than epsilon dont do the divison
                 std::cerr << "can't divide integers by zero!" << std::endl;
                 return *this;
             }
         } 
-        else if ( static_cast<NumericType>(otherType) < std::numeric_limits<NumericType>::epsilon() )
+        else if (static_cast<NumericType>(otherType) < std::numeric_limits<NumericType>::epsilon())
         {
             // if template type is less than epsilon warn about doing the division
             std::cerr << "warning: floating point division by zero!" << std::endl;
@@ -226,14 +227,14 @@ template<typename OtherType>
     }
 
     template<typename OtherType>
-    Numeric& pow(const OtherType& o) // #5
+    Numeric& pow(const OtherType& o)
     {
         *value = static_cast<Type>( std::pow(*value,static_cast<NumericType>(o)) );
         return *this;
     }
 
     template<typename Callable>
-    Numeric& apply( Callable callable) //  #4
+    Numeric& apply( Callable callable)
     {
         callable(value);
         return *this; 
