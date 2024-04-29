@@ -12,7 +12,7 @@ Create a branch named Part9
  
  2) move these macros after the JUCE_LEAK_DETECTOR macro :
  */
-
+/*
 #define JUCE_DECLARE_NON_COPYABLE(className) \
             className (const className&) = delete;\
             className& operator= (const className&) = delete;
@@ -20,7 +20,7 @@ Create a branch named Part9
 #define JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(className) \
             JUCE_DECLARE_NON_COPYABLE(className) \
             JUCE_LEAK_DETECTOR(className)
-
+*/
 /*
  3) add JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Temporary) to the end of the  Temporary<> struct
  
@@ -75,6 +75,8 @@ Use a service like https://www.diffchecker.com/diff to compare your output.
 #include <iostream>
 #include <cmath>
 #include <functional>
+#include <limits>
+#include "LeakedObjectDetector.h"
 
 template<typename NumericType>
 struct Temporary
@@ -84,6 +86,16 @@ struct Temporary
         std::cout << "I'm a Temporary<" << typeid(v).name() << "> object, #"
                   << counter++ << std::endl;
     }
+
+    Temporary(Temporary&& other) : v(std::move(other.v)) {}
+
+    Temporary& operator=(Temporary&& other)
+    {
+        v = std::move(other.v);
+        return *this;
+    }
+
+    ~Temporary() = default;
 
     operator NumericType() const 
     { 
@@ -96,6 +108,8 @@ struct Temporary
 private:
     static int counter;
     NumericType v;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Temporary)
 };
 
 
@@ -118,21 +132,40 @@ int Temporary<Type>::counter = 0;
 
 template<typename NumericType>
 struct Numeric
-{    
+{
     using Type = Temporary<NumericType>;
 
-    Numeric(Type t) : value(std::make_unique<Type>(t)) {}
+    Numeric(NumericType t) : value( std::make_unique<Type>(t) ) { }
 
-    ~Numeric() 
+    Numeric(Numeric&& other)
     {
-        value = nullptr;
+        value = std::move(other.value);
     }
 
-    operator Type() const {return *value;}
-    operator NumericType() const { return *value; }
-    operator NumericType&() { return *value; }
+    Numeric& operator= (Numeric&& other)
+    {
+        value = std::move(other.value);
+        return *this;
+    } 
 
-template<typename OtherType>
+    ~Numeric() = default;
+
+    operator Type() const
+    { 
+        return *value;
+    }
+
+    operator NumericType() const
+    {
+        return *value;
+    }
+
+    operator NumericType&()
+    {
+        return *value;
+    }
+
+    template<typename OtherType>
     Numeric& operator=(const OtherType& o) 
     { 
         *value = static_cast<NumericType>(o); 
@@ -140,28 +173,28 @@ template<typename OtherType>
     }
 
     template<typename OtherType>
-    Numeric& operator+=(const OtherType& o) // #3
+    Numeric& operator+=(const OtherType& o)
     {
         *value += static_cast<NumericType>(o);
         return *this;
     }
 
     template<typename OtherType>
-    Numeric& operator-=(const OtherType& o) // #3
+    Numeric& operator-=(const OtherType& o)
     { 
         *value -= static_cast<NumericType>(o); 
         return *this; 
     }
 
     template<typename OtherType>
-    Numeric& operator*=(const OtherType& o) // #3
+    Numeric& operator*=(const OtherType& o)
     {
         *value *= static_cast<NumericType>(o);
         return *this;
     }
 
     template<typename OtherType> 
-    Numeric& operator/=(const OtherType& otherType) // #3
+    Numeric& operator/=(const OtherType& otherType)
     {
         // template type is int
         if constexpr (std::is_same<NumericType,int>::value)
@@ -176,14 +209,14 @@ template<typename OtherType>
                     return *this;
                 }
             }
-            else if ( otherType < std::numeric_limits<OtherType>::epsilon() )
+            else if (otherType < std::numeric_limits<OtherType>::epsilon())
             {
                 // else if function parameter is less than epsilon dont do the divison
                 std::cerr << "can't divide integers by zero!" << std::endl;
                 return *this;
             }
         } 
-        else if ( static_cast<NumericType>(otherType) < std::numeric_limits<NumericType>::epsilon() )
+        else if (static_cast<NumericType>(otherType) < std::numeric_limits<NumericType>::epsilon())
         {
             // if template type is less than epsilon warn about doing the division
             std::cerr << "warning: floating point division by zero!" << std::endl;
@@ -194,14 +227,14 @@ template<typename OtherType>
     }
 
     template<typename OtherType>
-    Numeric& pow(const OtherType& o) // #5
+    Numeric& pow(const OtherType& o)
     {
         *value = static_cast<Type>( std::pow(*value,static_cast<NumericType>(o)) );
         return *this;
     }
 
     template<typename Callable>
-    Numeric& apply( Callable callable) //  #4
+    Numeric& apply( Callable callable)
     {
         callable(value);
         return *this; 
@@ -209,6 +242,8 @@ template<typename OtherType>
 
 private:
     std::unique_ptr<Type> value;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Numeric)
 };
 
 template<typename Type> 
